@@ -1,0 +1,18 @@
+.form-col{
+    margin-top: 50px;
+}
+
+.title{
+    text-align: center;
+}
+
+#button-col{
+    text-align: center;
+}
+
+.wrong-answer{
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    margin-top: 10px;
+}

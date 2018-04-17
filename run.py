@@ -5,7 +5,7 @@ from flask import Flask, redirect, render_template, request, flash
 
 app = Flask(__name__)
 
-
+username = ""
 counter = 0
 user_answer=""
 data= []
@@ -21,23 +21,15 @@ def write_to_file(filename, data):
 @app.route('/', methods=["GET", "POST"])
 def index():
     """Main page with instructions"""
-    
+    global username
     # Handle POST request
     if request.method == "POST":
         write_to_file("data/users.txt", request.form["username"] + "\n")
-    return render_template("index.html")
-
-
-@app.route('/riddles', methods=["GET", "POST"])
-def riddles():
-    global counter
-    global data
-    global user_answer
-    """Page with riddles"""
-    return render_template("riddles.html", data=data, i=counter, user_answer=user_answer)
+        return redirect(request.form["username"])
+    return render_template("index.html", username=username)
     
-@app.route('/next-riddle/', methods=["GET", "POST"])
-def next_riddle():
+@app.route('/<username>', methods=["GET", "POST"])
+def next_riddle(username):
     global counter
     global data
     global user_answer
