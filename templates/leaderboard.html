@@ -19,14 +19,15 @@
             <div class="col-xs-12 col-sm-6 col-md-6 form-col ">
                 <div class="title">
                     <h1><strong>Leaderboard</strong></h1>
+                </div>
                     <div>
                         <ol>
                             {% for user in data%}
-                            <li>{{ data.split(",") }}</li>
+                            <li class="leader-list">{{ user }}</li>
                             {% endfor %}
                         </ol>
                     </div>
-                </div>
+                
                 <div class="button-col">
                     <a href="{{ url_for('index') }}"><button class="btn btn-danger" id="highscores">Home</button></a>
                 </div>
