@@ -10,6 +10,7 @@ data= []
 score_dictinary = {}
 counter_dictinary = {}
 
+#Opens the riddles file 
 with open("data/riddles.json", "r") as json_data:
         data = json.load(json_data)
         
@@ -18,15 +19,14 @@ def write_to_file(filename, data):
     with open(filename, "a") as file:
         file.writelines(data)
         
-    
-
-
 @app.route('/', methods=["GET", "POST"])
 def index():
+    
+    """Main page with instructions"""
     global data
     global score_dictinary
     global counter_dictinary
-    """Main page with instructions"""
+    
     # Handle POST request
     if request.method == "POST":
         username = request.form["username"]
@@ -37,33 +37,39 @@ def index():
     
 @app.route('/riddles/<username>', methods=["GET", "POST"])
 def next_riddle(username):
+    
+    """ This page shows each riddle at a time """
     global data
     global user_answer
     global score_dictinary
     global counter_dictinary
     
     if len(data) == counter_dictinary[username] + 1:
+        # Redirects to winning page is user completes all riddles
         return redirect("/congratulations/" + username)
     else:
         if request.method == "POST":
+            # Updates score and counter dictionaries if the user guesses correctly
             if data[counter_dictinary[username]]["answer"] == request.form["answer"]:
                 score_dictinary[username] += 1
                 counter_dictinary[username] += 1
                 user_answer = ""
                 
             else:
+                # Updates score and counter dictionaries if the user guesses incorrectly
                 user_answer = request.form["answer"] + " is incorrect!"
                 if score_dictinary[username] > 0:
                     score_dictinary[username] -= 1
-                    
             
     return render_template("riddles.html", data=data, i=counter_dictinary[username], user_answer=user_answer, score = score_dictinary[username])  
     
 @app.route('/congratulations/<username>', methods=["GET", "POST"])
 def congratulations(username):
-    """Main page with instructions"""
+    
+    """ This page will appear once the user has completd all riddles"""
     global score_dictinary
     global counter_dictinary
+    
     # Handle POST request
     if request.method == "POST":
         write_to_file("data/winners.csv", username + "," + str(score_dictinary[username]) + "\n")
@@ -74,13 +80,17 @@ def congratulations(username):
     
 @app.route('/leaderboard')
 def leaderboard():
+    """ Displays all the winners of the riddle game in a leaderboard """
+    
     global score_dictinary
     data = []
     fields = []
     scores = []
     names = []
     users = []
+    i=0
     
+    #Reads the winners.csv file using import csv
     ifile = open("data/winners.csv", "rU")
     reader = csv.reader(ifile, delimiter=",")
     
@@ -89,21 +99,19 @@ def leaderboard():
         scores.append(row[1])
     
     ifile.close()
+    
+    #Sorts the list in descending order
     quicksort(scores, names, 0, len(scores) - 1)
     
-    i=0
+    #Joins the names and scores arrays together
     while i < len(scores):
         users.append(names[i] + " " + scores[i])
         i += 1
     
     return render_template("leaderboard.html", users=users)
-
-
-
     
     
-
-    
+"""--------------------Methods for quicksort--------------------"""
 def swap_values(lst, val1, val2):
     lst[val1], lst[val2] = lst[val2], lst[val1]
 
