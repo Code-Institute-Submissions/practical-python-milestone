@@ -7,13 +7,18 @@ class TestRun(unittest.TestCase):
     """
     def test_quick_sort_works(self):
         """
-        Test is to ensure the total size of the grid
-        is equal to width * height
+        Test is to ensure that the quicksort method sorts the list.
         """
         scores = [3,4,2,1,5]
         names = ["ben","jack","ted","lol","bing"]
         result = run.quicksort(scores, names, 0, len(scores) - 1)
         self.assertEqual(result, [1,2,3,4,5])
         
+    def test_csv_file_writer(self):
+        """
+        Test is to ensure that the quicksort method sorts the list.
+        """
+        result = run.write_to_csv_file("data/test.csv", [1,2,3], ["test","test1","test2"])
+        self.assertEqual(result, True)
 if __name__ == '__main__':
     unittest.main()

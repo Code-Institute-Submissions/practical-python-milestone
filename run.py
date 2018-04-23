@@ -167,6 +167,7 @@ def write_to_csv_file(filename, scores, names):
         scores.append(row[1])
         
     ifile.close()
+    return True
 
     
 app.run(host=os.getenv('IP'), port=int(os.getenv('PORT')), debug=True)
