@@ -1,13 +1,13 @@
 [{
         "riddle": "What starts with e, ends with e, and contains one letter?",
-        "answer": "envelope"
+        "answer": "ENVELOPE"
     },
     {
         "riddle": "What has one head, one foot, and four legs?",
-        "answer": "bed"
+        "answer": "BED"
     },
     {
         "riddle": "I travel all over the world, but always stay in my corner. What am I?",
-        "answer": "stamp"
+        "answer": "STAMP"
     }
 ]

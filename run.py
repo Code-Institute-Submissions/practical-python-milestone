@@ -13,23 +13,8 @@ counter_dictinary = {}
 with open("data/riddles.json", "r") as json_data:
         data = json.load(json_data)
 
-#Function used to write data to files       
-def write_to_file(filename, data):
-    """Handle the process of writing data to a file"""
-    with open(filename, "a") as file:
-        file.writelines(data)
+"""--------------------Routes--------------------"""  
 
-def write_to_csv_file(filename, scores, names):
-    
-    ifile = open(filename, "rU")
-    reader = csv.reader(ifile, delimiter=",")
-        
-    for row in reader:
-        names.append(row[0])
-        scores.append(row[1])
-        
-    ifile.close()
-        
 @app.route('/', methods=["GET", "POST"])
 def index():
     
@@ -60,7 +45,7 @@ def next_riddle(username):
     else:
         if request.method == "POST":
                 # Updates score and counter dictionaries if the user guesses correctly
-            if data[counter_dictinary[username]]["answer"] == request.form["answer"]:
+            if data[counter_dictinary[username]]["answer"] == (request.form["answer"]).upper():
                 correct(request, username)
                 
             else:
@@ -143,7 +128,7 @@ def partition(array, array2, start, end):
     
 """--------------------Methods for routes--------------------"""
     
-"""@app.route('/riddles/<username>', methods=["GET", "POST"])"""
+"""Riddles Route"""
 
 def correct(request, username):
     global user_answer
@@ -162,6 +147,25 @@ def incorrect(request, username):
     # Updates score and counter dictionaries if the user guesses incorrectly
     if score_dictinary[username] > 0:
         score_dictinary[username] -= 1
+        
+"""--------------------Functions for file handling--------------------"""
+#Function used to write data to files       
+def write_to_file(filename, data):
+    """Handle the process of writing data to a file"""
+    with open(filename, "a") as file:
+        file.writelines(data)
+
+#Function used to write data to csv files  
+def write_to_csv_file(filename, scores, names):
+    
+    ifile = open(filename, "rU")
+    reader = csv.reader(ifile, delimiter=",")
+        
+    for row in reader:
+        names.append(row[0])
+        scores.append(row[1])
+        
+    ifile.close()
 
     
 app.run(host=os.getenv('IP'), port=int(os.getenv('PORT')), debug=True)
