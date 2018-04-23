@@ -109,6 +109,7 @@ def quicksort(array, array2, start, end):
         partition_index = partition(array, array2, start, end) #
         quicksort(array, array2, start, partition_index - 1)
         quicksort(array, array2, partition_index + 1, end)
+    return array
 
 def partition(array, array2, start, end):
 
