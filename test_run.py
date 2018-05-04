@@ -16,9 +16,10 @@ class TestRun(unittest.TestCase):
         
     def test_csv_file_writer(self):
         """
-        Test is to ensure that the quicksort method sorts the list.
+        Test is to ensure that my csv file writer works.
         """
         result = run.write_to_csv_file("data/test.csv", [1,2,3], ["test","test1","test2"])
         self.assertEqual(result, True)
+        
 if __name__ == '__main__':
     unittest.main()

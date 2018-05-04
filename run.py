@@ -127,7 +127,7 @@ def partition(array, array2, start, end):
     array2[pivot], array2[partition_index] = array2[partition_index], array2[pivot]
     return partition_index
     
-"""--------------------Methods for routes--------------------"""
+"""--------------------Functions for routes--------------------"""
     
 """Riddles Route"""
 
