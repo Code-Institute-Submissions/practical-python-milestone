@@ -13,7 +13,7 @@ score_dictinary = {}
 counter_dictinary = {}
 
 app.config["MONGO_DBNAME"] = 'winners'
-app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
+app.config["MONGO_URI"] = 'mongodb://benhasselgren:ev00bish3@ds147180.mlab.com:47180/winners'#os.environ.get('MONGO_URI')
 
 mongo = PyMongo(app)
 
