@@ -159,7 +159,7 @@ def write_to_file(filename, data):
 #Function used to write data to csv files  
 def write_to_csv_file(filename, scores, names):
     
-    ifile = open(filename, "a")
+    ifile = open(filename, "r+")
     reader = csv.reader(ifile, delimiter=",")
         
     for row in reader:
