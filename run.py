@@ -1,13 +1,21 @@
 import os
+import env
 import json
+import sys
 import csv
 from flask import Flask, redirect, render_template, request, flash
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 user_answer=""
 data= []
 score_dictinary = {}
 counter_dictinary = {}
+
+app.config["MONGO_DBNAME"] = 'winners'
+app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
+
+mongo = PyMongo(app)
 
 #Opens the riddles file 
 with open("data/riddles.json", "r") as json_data:
@@ -64,7 +72,12 @@ def congratulations(username):
     
     # Handle POST request
     if request.method == "POST":
-        write_to_file("data/winners.csv", username + "," + str(score_dictinary[username]) + "\n")
+        winners = mongo.db.winners
+        currentWinner = {
+            'name': username,
+            'score': score_dictinary[username]
+        }
+        winners.insert_one(currentWinner)
         counter_dictinary[username] = 0
         score_dictinary[username] = 0
         return redirect("/")
@@ -82,8 +95,8 @@ def leaderboard():
     users = []
     i=0
     
-    #Reads the winners.csv file using import csv
-    write_to_csv_file("data/winners.csv", scores, names)
+    #Reads the winners from a mongo database 
+    read_mongo(scores, names)
     
     #Sorts the list in descending order
     quicksort(scores, names, 0, len(scores) - 1)
@@ -150,23 +163,15 @@ def incorrect(request, username):
         score_dictinary[username] -= 1
         
 """--------------------Functions for file handling--------------------"""
-#Function used to write data to files       
-def write_to_file(filename, data):
-    """Handle the process of writing data to a file"""
-    with open(filename, "a") as file:
-        file.writelines(data)
 
 #Function used to write data to csv files  
-def write_to_csv_file(filename, scores, names):
+def read_mongo(scores, names):
+    winners = mongo.db.winners.find()
     
-    ifile = open(filename, "r+")
-    reader = csv.reader(ifile, delimiter=",")
+    for winner in winners:
+        names.append(winner["name"])
+        scores.append(str(winner["score"]))
         
-    for row in reader:
-        names.append(row[0])
-        scores.append(row[1])
-        
-    ifile.close()
     return True
 
     
