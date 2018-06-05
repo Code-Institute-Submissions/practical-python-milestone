@@ -40,3 +40,17 @@
     on the heroku dashboard. I then had to add a procfile and a reuiqrments.txt file so heroku would know how to set up my app. As my winners where stored extrenally
     and I didn't rely on heroku's local postgres database, I didn't have to worry about migrating my database over.
 </p>
+
+<h1>ANSWERS</h1>
+<ul>
+    <li>envelope</li>
+    <li>bed</li>
+    <li>stamp</li>
+    <li>candle</li>
+    <li>clock</li>
+    <li>teapot</li>
+    <li>towel</li>
+    <li>sponge</li>
+    <li>seven</li>
+    <li>envelope</li>
+</ul>
