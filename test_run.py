@@ -14,12 +14,5 @@ class TestRun(unittest.TestCase):
         result = run.quicksort(scores, names, 0, len(scores) - 1)
         self.assertEqual(result, [1,2,3,4,5])
         
-    def test_csv_file_writer(self):
-        """
-        Test is to ensure that my csv file writer works.
-        """
-        result = run.write_to_csv_file("data/test.csv", [1,2,3], ["test","test1","test2"])
-        self.assertEqual(result, True)
-        
 if __name__ == '__main__':
     unittest.main()
